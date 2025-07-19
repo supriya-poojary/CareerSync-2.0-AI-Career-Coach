@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CareerSync 2.0 - AI Career Coach</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header__content">
+                <div class="logo">
+                    <h1>CareerSync 2.0</h1>
+                    <span>AI Career Coach</span>
+                </div>
+                <nav class="nav">
+                    <button class="nav__item btn" data-section="dashboard" type="button">Dashboard</button>
+                    <button class="nav__item btn" data-section="resume" type="button">Resume</button>
+                    <button class="nav__item btn" data-section="jobs" type="button">Jobs</button>
+                    <button class="nav__item btn" data-section="interview" type="button">Interview</button>
+                    <button class="nav__item btn" data-section="plan" type="button">Career Plan</button>
+                    <button class="theme-toggle btn" id="themeToggle" type="button">🌙</button>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="container">
+            <!-- Landing Section -->
+            <section class="landing" id="landing">
+                <div class="hero">
+                    <h2>Transform Your Career with AI-Powered Coaching</h2>
+                    <p>Upload your resume, get personalized job recommendations, practice interviews, and receive a customized 7-day career improvement plan.</p>
+                    <div class="hero-buttons">
+                        <button class="btn btn--primary btn--lg" id="getStartedBtn" type="button">Get Started</button>
+                        <button class="btn btn--outline btn--lg" id="tryDemoBtn" type="button">Try Demo</button>
+                    </div>
+                </div>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">📄</div>
+                        <h3>Resume Analysis</h3>
+                        <p>Get ATS scoring and formatting tips</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">💼</div>
+                        <h3>Job Matching</h3>
+                        <p>AI-powered job role recommendations</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🎤</div>
+                        <h3>Mock Interviews</h3>
+                        <p>Practice with speech-to-text analysis</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📈</div>
+                        <h3>Career Planning</h3>
+                        <p>Personalized 7-day improvement plans</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Dashboard Section -->
+            <section class="section" id="dashboard">
+                <h2>Career Dashboard</h2>
+                <div class="dashboard-grid">
+                    <div class="card dashboard-card">
+                        <div class="card__body">
+                            <h3>ATS Score</h3>
+                            <div class="score-display">
+                                <div class="score-circle">
+                                    <span class="score-value" id="atsScore">--</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card dashboard-card">
+                        <div class="card__body">
+                            <h3>Skills Radar</h3>
+                            <canvas id="skillsChart" width="300" height="200"></canvas>
+                        </div>
+                    </div>
+                    <div class="card dashboard-card">
+                        <div class="card__body">
+                            <h3>Career Progress</h3>
+                            <div class="progress-list">
+                                <div class="progress-item">
+                                    <label>Resume Optimization</label>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" id="resumeProgress"></div>
+                                    </div>
+                                </div>
+                                <div class="progress-item">
+                                    <label>Interview Prep</label>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" id="interviewProgress"></div>
+                                    </div>
+                                </div>
+                                <div class="progress-item">
+                                    <label>Skill Development</label>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" id="skillProgress"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Resume Section -->
+            <section class="section" id="resume">
+                <h2>Resume Analysis</h2>
+                <div class="resume-upload">
+                    <div class="card">
+                        <div class="card__body">
+                            <div class="upload-area" id="uploadArea">
+                                <div class="upload-content">
+                                    <div class="upload-icon">📁</div>
+                                    <h3>Upload Your Resume</h3>
+                                    <p>Drop a PDF file here or click to browse</p>
+                                    <input type="file" id="resumeFile" accept=".pdf" class="file-input">
+                                    <button class="btn btn--primary" id="uploadBtn" type="button">Choose File</button>
+                                </div>
+                            </div>
+                            <div class="divider">OR</div>
+                            <div class="text-input-area">
+                                <label class="form-label" for="resumeText">Paste Resume Text</label>
+                                <textarea class="form-control" id="resumeText" rows="10" placeholder="Paste your resume content here..."></textarea>
+                                <button class="btn btn--primary" id="analyzeResumeBtn" type="button">Analyze Resume</button>
+                                <button class="btn btn--secondary" id="clearResumeBtn" type="button">Clear</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Analysis Results -->
+                <div class="analysis-results" id="analysisResults" style="display: none;">
+                    <div class="card">
+                        <div class="card__body">
+                            <h3>ATS Analysis Results</h3>
+                            <div class="ats-score-section">
+                                <div class="score-display">
+                                    <div class="score-circle large">
+                                        <span class="score-value" id="detailedAtsScore">--</span>
+                                    </div>
+                                </div>
+                                <div class="score-details">
+                                    <div class="score-breakdown">
+                                        <div class="score-item">
+                                            <span>Keywords</span>
+                                            <span id="keywordScore">--</span>
+                                        </div>
+                                        <div class="score-item">
+                                            <span>Formatting</span>
+                                            <span id="formatScore">--</span>
+                                        </div>
+                                        <div class="score-item">
+                                            <span>Structure</span>
+                                            <span id="structureScore">--</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="improvement-tips">
+                                <h4>Improvement Tips</h4>
+                                <ul id="improvementTips"></ul>
+                            </div>
+                            <div class="extracted-skills">
+                                <h4>Extracted Skills</h4>
+                                <div class="skills-tags" id="extractedSkills"></div>
+                            </div>
+                            <button class="btn btn--primary" id="findJobsBtn" type="button">Find Matching Jobs</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Jobs Section -->
+            <section class="section" id="jobs">
+                <h2>Job Recommendations</h2>
+                <div class="job-recommendations" id="jobRecommendations">
+                    <div class="empty-state">
+                        <p>Upload and analyze your resume to see personalized job recommendations.</p>
+                    </div>
+                </div>
+                <div class="skills-gap" id="skillsGap" style="display: none;">
+                    <h3>Skills Gap Analysis</h3>
+                    <div class="gap-cards" id="gapCards"></div>
+                    <button class="btn btn--primary" id="startSkillsBtn" type="button">Start Skills Development</button>
+                </div>
+            </section>
+
+            <!-- Interview Section -->
+            <section class="section" id="interview">
+                <h2>Mock Interview Practice</h2>
+                <div class="interview-container">
+                    <div class="card">
+                        <div class="card__body">
+                            <div class="interview-controls">
+                                <select class="form-control" id="questionType">
+                                    <option value="technical">Technical Questions</option>
+                                    <option value="behavioral">Behavioral Questions</option>
+                                </select>
+                                <button class="btn btn--primary" id="startInterviewBtn" type="button">Start Practice</button>
+                            </div>
+                            
+                            <div class="interview-session" id="interviewSession" style="display: none;">
+                                <div class="question-display">
+                                    <h4>Question <span id="questionNumber">1</span> of 5:</h4>
+                                    <p id="currentQuestion"></p>
+                                </div>
+                                
+                                <div class="speech-controls">
+                                    <button class="btn btn--primary" id="startRecordingBtn" type="button">🎤 Start Recording</button>
+                                    <button class="btn btn--secondary" id="stopRecordingBtn" type="button" style="display: none;">⏹️ Stop Recording</button>
+                                    <div class="recording-status" id="recordingStatus"></div>
+                                </div>
+                                
+                                <div class="answer-display">
+                                    <h5>Your Answer:</h5>
+                                    <div class="answer-text" id="answerText">Your answer will appear here...</div>
+                                </div>
+                                
+                                <div class="analysis-feedback" id="analysisFeedback" style="display: none;">
+                                    <h5>Performance Analysis:</h5>
+                                    <div class="feedback-metrics">
+                                        <div class="metric">
+                                            <span>Confidence Level:</span>
+                                            <span id="confidenceLevel">--</span>
+                                        </div>
+                                        <div class="metric">
+                                            <span>Speaking Pace:</span>
+                                            <span id="speakingPace">--</span>
+                                        </div>
+                                        <div class="metric">
+                                            <span>Answer Length:</span>
+                                            <span id="answerLength">--</span>
+                                        </div>
+                                    </div>
+                                    <div class="feedback-tips" id="feedbackTips"></div>
+                                </div>
+                                
+                                <div class="interview-navigation">
+                                    <button class="btn btn--outline" id="nextQuestionBtn" type="button">Next Question</button>
+                                    <button class="btn btn--secondary" id="endInterviewBtn" type="button">End Interview</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Career Plan Section -->
+            <section class="section" id="plan">
+                <h2>7-Day Career Improvement Plan</h2>
+                <div class="plan-container" id="planContainer">
+                    <div class="empty-state">
+                        <p>Complete your resume analysis and job matching to generate a personalized career plan.</p>
+                        <button class="btn btn--primary" id="generatePlanBtn" type="button">Generate Plan</button>
+                    </div>
+                </div>
+                <div class="plan-content" id="planContent" style="display: none;">
+                    <div class="plan-progress">
+                        <h3>Overall Progress</h3>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="planProgress" style="width: 0%"></div>
+                        </div>
+                        <div class="plan-actions">
+                            <button class="btn btn--secondary" id="resetPlanBtn" type="button">Reset Progress</button>
+                            <button class="btn btn--outline" id="exportPlanBtn" type="button">Export Plan</button>
+                        </div>
+                    </div>
+                    <div class="plan-days" id="planDays"></div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay" style="display: none;">
+        <div class="loading-content">
+            <div class="loading-spinner"></div>
+            <p id="loadingText">Processing...</p>
+        </div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>
